@@ -19,6 +19,11 @@ const eslintConfig = [
     "plugin:@typescript-eslint/recommended",
     "plugin:prettier/recommended",
   ),
+  ...compat.config({
+    rules: {
+      "@typescript-eslint/no-empty-object-type": "off",
+    },
+  }),
 ];
 
 export default eslintConfig;
