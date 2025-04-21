@@ -3,6 +3,7 @@
 import { Button } from "@/components/atoms/Button";
 import { Form } from "@/components/atoms/Form";
 import { NumberField } from "@/components/atoms/NumberField";
+import { Slider, SliderTrack } from "@/components/atoms/Slider";
 import { TextField } from "@/components/atoms/TextField";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -66,6 +67,9 @@ export default function Home() {
             />
           )}
         />
+        <Slider minValue={0} maxValue={100} step={1}>
+          <SliderTrack></SliderTrack>
+        </Slider>
         <Button type="submit" isDisabled={true}>
           Submit
         </Button>

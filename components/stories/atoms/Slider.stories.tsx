@@ -1,58 +1,54 @@
-// components/atoms/Slider.stories.tsx
-import { Slider, SliderProps } from "@/components/atoms/Slider";
+import { Slider, SliderProps, SliderTrack } from "@/components/atoms/Slider";
 import { Meta, StoryFn } from "@storybook/react";
-import { useState } from "react";
-type UnionSliderProps = SliderProps<number | number[]>;
 
 export default {
   title: "Atoms/Slider",
   component: Slider,
+  subcomponents: { SliderTrack },
   argTypes: {
-    label: { control: "text" },
-    thumbLabels: { control: "object" },
+    label: { control: "text", description: "Slider label" },
+    thumbLabels: { control: "object", description: "Labels for each thumb" },
     orientation: {
-      control: { type: "inline-radio" },
-      options: ["horizontal"],
+      control: "select",
+      options: ["horizontal", "vertical"],
+      description: "Orientation of the slider",
     },
-    minValue: { control: { type: "number" } },
-    maxValue: { control: { type: "number" } },
-    step: { control: { type: "number" } },
-    defaultValue: { control: "object" },
-    isDisabled: { control: "boolean" },
-    onChange: { action: "changed" },
+    minValue: { control: "number", description: "Minimum value of the slider" },
+    maxValue: { control: "number", description: "Maximum value of the slider" },
+    step: { control: "number", description: "Increment step of the slider" },
+    defaultValue: {
+      control: "object",
+      description: "Default value(s) of the thumb(s)",
+    },
+    isDisabled: {
+      control: "boolean",
+      description: "Whether the slider is disabled",
+    },
+    onChange: { action: "changed", description: "Change event handler" },
   },
-} as Meta<UnionSliderProps>;
+} as Meta<SliderProps<number | number[]>>;
 
-// Single‐thumb slider template
-const SingleTemplate: StoryFn<UnionSliderProps> = (args) => {
-  const initial =
-    typeof args.defaultValue === "number"
-      ? args.defaultValue
-      : (args.defaultValue?.[0] ?? 0);
-  const [value, setValue] = useState<number | number[]>(initial);
-
-  return (
-    <Slider
-      {...args}
-      value={value}
-      onChange={(v) => {
-        // v can be number or number[]
-        if (Array.isArray(v)) {
-          const single = v[0] ?? 0;
-          setValue(single);
-        } else {
-          setValue(v);
+const Template: StoryFn<SliderProps<number | number[]>> = (args) => (
+  <div
+    style={{
+      padding: "2rem",
+      display: "flex",
+      justifyContent: args.orientation === "vertical" ? "center" : "flex-start",
+    }}
+  >
+    <Slider {...args}>
+      <SliderTrack
+        thumbLabels={
+          Array.isArray(args.defaultValue) ? args.thumbLabels : undefined
         }
-        args.onChange?.(v);
-      }}
-    />
-  );
-};
+      />
+    </Slider>
+  </div>
+);
 
-export const Default = SingleTemplate.bind({});
+export const Default = Template.bind({});
 Default.args = {
-  label: "Size (GB)",
-  thumbLabels: ["Size"],
+  label: "Volume",
   orientation: "horizontal",
   minValue: 0,
   maxValue: 100,
@@ -60,38 +56,34 @@ Default.args = {
   defaultValue: 50,
 };
 
-export const Disabled = SingleTemplate.bind({});
-Disabled.args = {
-  ...Default.args,
-  isDisabled: true,
-};
-
-// Range (two‐thumb) slider template
-const RangeTemplate: StoryFn<UnionSliderProps> = (args) => {
-  const initial = Array.isArray(args.defaultValue)
-    ? args.defaultValue
-    : [args.minValue ?? 0, args.maxValue ?? 0];
-  const [value, setValue] = useState<number | number[]>(initial);
-
-  return (
-    <Slider
-      {...args}
-      value={value}
-      onChange={(v) => {
-        setValue(v);
-        args.onChange?.(v);
-      }}
-    />
-  );
-};
-
-export const Range = RangeTemplate.bind({});
+export const Range = Template.bind({});
 Range.args = {
-  label: "Range",
-  thumbLabels: ["Min", "Max"],
+  label: "Select range",
   orientation: "horizontal",
   minValue: 0,
   maxValue: 100,
   step: 5,
   defaultValue: [20, 80],
+  thumbLabels: ["Min", "Max"],
+};
+
+export const Vertical = Template.bind({});
+Vertical.args = {
+  label: "Brightness",
+  orientation: "vertical",
+  minValue: 0,
+  maxValue: 10,
+  step: 1,
+  defaultValue: 5,
+};
+
+export const Disabled = Template.bind({});
+Disabled.args = {
+  label: "Disabled slider",
+  orientation: "horizontal",
+  minValue: 0,
+  maxValue: 100,
+  step: 10,
+  defaultValue: 30,
+  isDisabled: true,
 };

@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@plugin "tailwindcss-react-aria-components";
 
 :root {
   --background: #ffffff;
@@ -32,6 +33,9 @@
   --color-btn-secondary-outlined-foreground: var(--tertiary-foreground);
   --color-btn-disabled: var(--disabled);
   --color-btn-disabled-foreground: var(--disabled-foreground);
+  --color-slider-fill: var(--primary);
+  --color-slider-track: var(--color-gray-300);
+  --color-slider-thumb: var(--primary);
   --color-disabled: var(--disabled);
   --font-sans: var(--font-sofia-sans);
   --font-mono: var(--font-geist-mono);

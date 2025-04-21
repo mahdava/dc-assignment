@@ -1,93 +1,113 @@
-"use client";
+// "Borrowed" with love from https://github.com/zaichaopan/react-aria-components-tailwind-starter/blob/master/src/slider.tsx
 
-import React from "react";
 import {
-  Slider as AriaSlider,
-  SliderProps as AriaSliderProps,
-  SliderOutput,
+  Slider as RACSlider,
+  SliderProps as RACSliderProps,
+  SliderTrack as RACSliderTrack,
+  SliderRenderProps,
   SliderThumb,
-  SliderTrack,
+  composeRenderProps,
 } from "react-aria-components";
-import { tv } from "tailwind-variants";
-import { Label } from "./Field";
-import { composeTailwindRenderProps, focusRing } from "./utils";
+import { twMerge } from "tailwind-merge";
+import { composeTailwindRenderProps } from "./utils";
 
-const trackStyles = tv({
-  base: "rounded-full",
-  variants: {
-    orientation: {
-      horizontal: "w-full h-[6px]",
-      vertical: "h-full w-[6px] ml-[50%] -translate-x-[50%]",
-    },
-    isDisabled: {
-      false: "bg-gray-300 dark:bg-zinc-500 forced-colors:bg-[ButtonBorder]",
-      true: "bg-gray-100 dark:bg-zinc-800 forced-colors:bg-[GrayText]",
-    },
-  },
-});
+export { SliderOutput } from "react-aria-components";
 
-const thumbStyles = tv({
-  extend: focusRing,
-  base: "w-6 h-6 group-orientation-horizontal:mt-6 group-orientation-vertical:ml-3 rounded-full bg-gray-50 dark:bg-zinc-900 border-2 border-gray-700 dark:border-gray-300",
-  variants: {
-    isDragging: {
-      true: "bg-gray-700 dark:bg-gray-300 forced-colors:bg-[ButtonBorder]",
-    },
-    isDisabled: {
-      true: "border-gray-300 dark:border-zinc-700 forced-colors:border-[GrayText]",
-    },
-  },
-});
-
-export interface SliderProps<T> extends AriaSliderProps<T> {
+export interface SliderProps<T> extends RACSliderProps<T> {
   label?: string;
   thumbLabels?: string[];
 }
 
-function _SliderInner<T extends number | number[]>(
-  { label, thumbLabels, className, ...props }: SliderProps<T>,
-  ref: React.ForwardedRef<HTMLDivElement>,
-) {
+export function Slider<T extends number | number[]>(props: SliderProps<T>) {
   return (
-    <AriaSlider
+    <RACSlider
       {...props}
-      ref={ref}
       className={composeTailwindRenderProps(
-        className,
-        "orientation-horizontal:grid orientation-vertical:flex grid-cols-[1fr_auto] flex-col items-center gap-2 orientation-horizontal:w-64",
+        props.className,
+        "flex flex-col gap-2 data-[orientation=horizontal]:min-w-64 data-[orientation=vertical]:items-center",
       )}
-    >
-      {label && <Label>{label}</Label>}
+    />
+  );
+}
 
-      <SliderOutput className="text-sm text-gray-500 dark:text-zinc-400 font-medium orientation-vertical:hidden">
-        {({ state }) =>
-          state.values.map((_, i) => state.getThumbValueLabel(i)).join(" – ")
-        }
-      </SliderOutput>
+const trackStyle = [
+  "absolute rounded-full",
+  "group-data-[orientation=horizontal]:h-1.5",
+  "group-data-[orientation=horizontal]:w-full",
+  "group-data-[orientation=vertical]:top-1/2",
+  "group-data-[orientation=vertical]:left-1/2",
+  "group-data-[orientation=vertical]:h-full",
+  "group-data-[orientation=vertical]:w-[6px]",
+  "group-data-disabled:opacity-50",
+];
 
-      <SliderTrack className="group col-span-2 orientation-horizontal:h-6 orientation-vertical:w-6 orientation-vertical:h-64 flex items-center">
-        {({ state, ...renderProps }) => (
+export function SliderTrack({ thumbLabels }: { thumbLabels?: string[] }) {
+  return (
+    <RACSliderTrack className="group relative flex w-full items-center data-[orientation=horizontal]:h-7 data-[orientation=vertical]:h-44 data-[orientation=vertical]:w-7">
+      {({ state, orientation }) => {
+        return (
           <>
-            <div className={trackStyles(renderProps)} />
+            <div
+              className={twMerge(
+                "bg-zinc-200 group-data-[orientation=vertical]:-translate-x-1/2 group-data-[orientation=vertical]:-translate-y-1/2",
+                trackStyle,
+              )}
+            />
+            <div
+              className={twMerge("bg-slider-fill", trackStyle)}
+              style={getTrackHighlightStyle(state, orientation)}
+            />
             {state.values.map((_, i) => (
               <SliderThumb
                 key={i}
                 index={i}
                 aria-label={thumbLabels?.[i]}
-                className={thumbStyles}
+                className={composeRenderProps(
+                  "",
+                  (className, { isFocusVisible, isDragging, isDisabled }) =>
+                    twMerge(
+                      "border-white size-6 rounded-full border-2 bg-slider-thumb shadow-xl cursor-pointer outline-slider-thumb/16 hover:outline-8 hover:outline-ring",
+                      "group-data-[orientation=horizontal]:top-1/2 group-data-[orientation=vertical]:left-1/2",
+                      isDragging && ["border-2"],
+                      isDisabled && "cursor-not-allowed bg-disabled",
+                      isFocusVisible && [
+                        "outline-slider-thumb/16",
+                        "outline-8",
+                        "outline-ring",
+                      ],
+                      className,
+                    ),
+                )}
               />
             ))}
           </>
-        )}
-      </SliderTrack>
-    </AriaSlider>
+        );
+      }}
+    </RACSliderTrack>
   );
 }
 
-export const Slider = React.forwardRef(
-  _SliderInner,
-) as React.ForwardRefExoticComponent<
-  SliderProps<number | number[]> & React.RefAttributes<HTMLDivElement>
->;
+function getTrackHighlightStyle(
+  state: SliderRenderProps["state"],
+  orientation: SliderRenderProps["orientation"],
+) {
+  const hasTwoThumbs = state.values.length == 2;
+  const highlightPercentage = hasTwoThumbs
+    ? (state.getThumbPercent(1) - state.getThumbPercent(0)) * 100 + "%"
+    : state.getThumbPercent(0) * 100 + "%";
+  const highlightStartPosition = hasTwoThumbs
+    ? state.getThumbPercent(0) * 100 + "%"
+    : "0";
 
-Slider.displayName = "Slider";
+  return orientation === "horizontal"
+    ? {
+        width: highlightPercentage,
+        left: highlightStartPosition,
+      }
+    : {
+        height: highlightPercentage,
+        bottom: highlightStartPosition,
+        top: "auto",
+        transform: "translate(-50%,0px)",
+      };
+}
