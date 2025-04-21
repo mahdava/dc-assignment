@@ -25,10 +25,7 @@ export const Label = React.forwardRef<HTMLLabelElement, LabelProps>(
     <RACLabel
       {...props}
       ref={ref}
-      className={twMerge(
-        "text-sm text-gray-500 font-medium cursor-default w-fit",
-        className,
-      )}
+      className={twMerge("text-sm text-label font-semibold", className)}
     />
   ),
 );
@@ -54,10 +51,7 @@ export const FieldError = React.forwardRef<HTMLDivElement, FieldErrorProps>(
     <RACFieldError
       {...props}
       ref={ref}
-      className={composeTailwindRenderProps(
-        className,
-        "text-sm text-red-600 forced-colors:text-[Mark]",
-      )}
+      className={composeTailwindRenderProps(className, "text-sm text-red-600")}
     />
   ),
 );
@@ -66,21 +60,21 @@ FieldError.displayName = "FieldError";
 export const fieldBorderStyles = tv({
   variants: {
     isFocusWithin: {
-      false: "border-gray-300 forced-colors:border-[ButtonBorder]",
-      true: "border-gray-600 forced-colors:border-[Highlight]",
+      false: "",
+      true: "",
     },
     isInvalid: {
-      true: "border-red-600 forced-colors:border-[Mark]",
+      true: "border-red-600",
     },
     isDisabled: {
-      true: "border-gray-200 forced-colors:border-[GrayText]",
+      true: "border-input-disabled bg-input-disabled text-input-disabled-foreground",
     },
   },
 });
 
 export const fieldGroupStyles = tv({
   extend: focusRing,
-  base: "group flex items-center h-9 bg-white forced-colors:bg-[Field] border-2 rounded-lg overflow-hidden",
+  base: "group flex items-center h-9 bg-white border-1 rounded-lg overflow-hidden",
   variants: fieldBorderStyles.variants,
 });
 
@@ -106,7 +100,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
       ref={ref}
       className={composeTailwindRenderProps(
         className,
-        "px-2 py-1.5 flex-1 min-w-0 outline-0 bg-white text-sm text-gray-800 disabled:text-gray-200",
+        "px-2 py-1.5 flex-1 min-w-0 outline-0 bg-background border-input-brd text-sm",
       )}
     />
   ),

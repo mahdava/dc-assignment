@@ -14,12 +14,18 @@
   --tertiary-dark: var(--color-gray-500);
   --tertiary-foreground: #000000;
   --disabled: var(--color-gray-200);
+  --disabled-light: var(--color-gray-50);
   --disabled-foreground: var(--color-gray-500);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-disabled: var(--disabled);
+  --font-sans: var(--font-sofia-sans);
+  --font-mono: var(--font-geist-mono);
+
+  /* Button styles */
   --color-btn-primary: var(--primary);
   --color-btn-primary-dark: var(--primary-dark);
   --color-btn-primary-outlined: var(--primary-outlined);
@@ -32,12 +38,23 @@
   --color-btn-secondary-outlined-foreground: var(--tertiary-foreground);
   --color-btn-disabled: var(--disabled);
   --color-btn-disabled-foreground: var(--disabled-foreground);
+
+  /* Label styles */
+  --color-label: var(--color-gray-900);
+
+  /* Slider styles */
   --color-slider-fill: var(--primary);
   --color-slider-track: var(--color-gray-300);
   --color-slider-thumb: var(--primary);
-  --color-disabled: var(--disabled);
-  --font-sans: var(--font-sofia-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* Input styles */
+  --color-input-brd: var(--color-gray-400);
+  --color-input-brd-dark: var(--color-gray-500);
+  --color-input-brd-primary: var(--primary-dark);
+  --color-input-foreground: var(--color-gray-600);
+  --color-input-foreground-dark: var(--color-gray-600);
+  --color-input-disabled: var(--disabled-light);
+  --color-input-disabled-foreground: var(--disabled-foreground);
 }
 
 /* 

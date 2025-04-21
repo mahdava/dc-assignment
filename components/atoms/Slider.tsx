@@ -32,12 +32,12 @@ export function Slider<T extends number | number[]>(props: SliderProps<T>) {
 
 const trackStyle = [
   "absolute rounded-full",
-  "group-data-[orientation=horizontal]:h-1.5",
+  "group-data-[orientation=horizontal]:h-1.25",
   "group-data-[orientation=horizontal]:w-full",
   "group-data-[orientation=vertical]:top-1/2",
   "group-data-[orientation=vertical]:left-1/2",
   "group-data-[orientation=vertical]:h-full",
-  "group-data-[orientation=vertical]:w-[6px]",
+  "group-data-[orientation=vertical]:w-[4px]",
   "group-data-disabled:opacity-50",
 ];
 
@@ -49,7 +49,7 @@ export function SliderTrack({ thumbLabels }: { thumbLabels?: string[] }) {
           <>
             <div
               className={twMerge(
-                "bg-zinc-200 group-data-[orientation=vertical]:-translate-x-1/2 group-data-[orientation=vertical]:-translate-y-1/2",
+                "bg-slider-track group-data-[orientation=vertical]:-translate-x-1/2 group-data-[orientation=vertical]:-translate-y-1/2",
                 trackStyle,
               )}
             />
@@ -66,15 +66,12 @@ export function SliderTrack({ thumbLabels }: { thumbLabels?: string[] }) {
                   "",
                   (className, { isFocusVisible, isDragging, isDisabled }) =>
                     twMerge(
-                      "border-white size-6 rounded-full border-2 bg-slider-thumb shadow-xl cursor-pointer outline-slider-thumb/16 hover:outline-8 hover:outline-ring",
+                      "border-white size-5 rounded-full border-1 bg-slider-thumb shadow-xl cursor-pointer outline-none hover:ring-8 hover:ring-slider-thumb/16 ring-offset-2",
                       "group-data-[orientation=horizontal]:top-1/2 group-data-[orientation=vertical]:left-1/2",
-                      isDragging && ["border-2"],
+                      isDragging && "ring-8 ring-slider-thumb/16 ring-offset-2",
                       isDisabled && "cursor-not-allowed bg-disabled",
-                      isFocusVisible && [
-                        "outline-slider-thumb/16",
-                        "outline-8",
-                        "outline-ring",
-                      ],
+                      isFocusVisible &&
+                        "ring-8 ring-slider-thumb/16 ring-offset-2",
                       className,
                     ),
                 )}

@@ -7,18 +7,27 @@ import {
   ValidationResult,
 } from "react-aria-components";
 import { tv } from "tailwind-variants";
-import {
-  Description,
-  FieldError,
-  Input,
-  Label,
-  fieldBorderStyles,
-} from "./Field";
+import { Description, FieldError, Input, Label } from "./Field";
 import { composeTailwindRenderProps, focusRing } from "./utils";
+
+export const fieldBorderStyles = tv({
+  variants: {
+    isFocusWithin: {
+      false: "",
+      true: "border-1 ring-1 ring-inset ring-input-brd-primary border-input-brd-primary text-foreground",
+    },
+    isInvalid: {
+      true: "border-red-600",
+    },
+    isDisabled: {
+      true: "border-input-disabled bg-input-disabled text-input-disabled-foreground",
+    },
+  },
+});
 
 const inputStyles = tv({
   extend: focusRing,
-  base: "border-2 rounded-md",
+  base: "border-1 rounded-md border-input-brd hover:not-focus-within:border-input-brd-dark hover:focus-within:border-input-brd-primary hover:focus-within:text-foreground",
   variants: {
     isFocused: fieldBorderStyles.variants.isFocusWithin,
     isInvalid: fieldBorderStyles.variants.isInvalid,

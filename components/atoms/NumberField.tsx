@@ -7,14 +7,8 @@ import {
   NumberFieldProps as AriaNumberFieldProps,
   ValidationResult,
 } from "react-aria-components";
-import {
-  Description,
-  FieldError,
-  FieldGroup,
-  Input,
-  Label,
-  fieldBorderStyles,
-} from "./Field";
+import { tv } from "tailwind-variants";
+import { Description, FieldError, FieldGroup, Input, Label } from "./Field";
 import { composeTailwindRenderProps } from "./utils";
 
 export interface NumberFieldProps extends AriaNumberFieldProps {
@@ -22,6 +16,21 @@ export interface NumberFieldProps extends AriaNumberFieldProps {
   description?: string;
   errorMessage?: string | ((validation: ValidationResult) => string);
 }
+
+export const fieldBorderStyles = tv({
+  variants: {
+    isFocusWithin: {
+      false: "",
+      true: "",
+    },
+    isInvalid: {
+      true: "border-red-600",
+    },
+    isDisabled: {
+      true: "border-input-disabled text-input-disabled-foreground",
+    },
+  },
+});
 
 export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(
   ({ label, description, errorMessage, className, ...props }, ref) => (
@@ -35,13 +44,13 @@ export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(
     >
       {label && <Label>{label}</Label>}
 
-      <FieldGroup className="h-8 max-w-28">
+      <FieldGroup className="inline-block h-6.5 rounded-sm max-w-26 border-input-brd hover:border-input-brd-dark disabled:border-input-disabled disabled:bg-disabled disabled:text-input-disabled-foreground">
         {(renderProps) => (
           <>
             <div
               className={fieldBorderStyles({
                 ...renderProps,
-                class: "flex items-center px-1",
+                class: "flex items-center justify-between -mt-1 px-0.5",
               })}
             >
               <Button
@@ -50,10 +59,10 @@ export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(
                 size="small"
                 iconOnly
                 icon={{ name: "minus" }}
-                className="rounded-sm w-5 h-5"
+                className="rounded-sm w-5 h-5 disabled:rounded-sm"
               ></Button>
 
-              <Input className="max-w-[60px] py-4 text-center" />
+              <Input className="max-w-[60px] text-center ring-0 bg-transparent disabled:bg-input-disabled" />
 
               <Button
                 slot="increment"
@@ -61,7 +70,7 @@ export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(
                 size="small"
                 iconOnly
                 icon={{ name: "plus" }}
-                className="rounded-sm w-5 h-5"
+                className="rounded-sm w-5 h-5 disabled:rounded-sm"
               ></Button>
             </div>
           </>
