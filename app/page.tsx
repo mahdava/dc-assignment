@@ -66,7 +66,10 @@ export default function Home() {
             />
           )}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit" isDisabled={true}>
+          Submit
+        </Button>
+        <Button type="submit">Hello</Button>
       </Form>
 
       {submitted && (

@@ -22,8 +22,8 @@ export const Icon: FC<IconProps> = ({
   ...props
 }) => {
   const SpecificIcon = icons[name];
-  const w = size ?? 24;
-  const h = size ?? 24;
+  const w = size ?? 16;
+  const h = size ?? 16;
 
   return <SpecificIcon width={w} height={h} fill={fill} {...props} />;
 };

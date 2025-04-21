@@ -3,21 +3,49 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --primary: #4b7a8a;
+  --primary-dark: #245866;
+  --primary-outlined: #f5f9f9;
+  --primary-foreground: #ffffff;
+  --secondary: var(--color-gray-200);
+  --secondary-dark: var(--color-gray-300);
+  --secondary-foreground: #000000;
+  --tertiary: var(--color-gray-400);
+  --tertiary-dark: var(--color-gray-500);
+  --tertiary-foreground: #000000;
+  --disabled: var(--color-gray-200);
+  --disabled-foreground: var(--color-gray-500);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-btn-primary: var(--primary);
+  --color-btn-primary-dark: var(--primary-dark);
+  --color-btn-primary-outlined: var(--primary-outlined);
+  --color-btn-primary-foreground: var(--primary-foreground);
+  --color-btn-secondary: var(--secondary);
+  --color-btn-secondary-dark: var(--secondary-dark);
+  --color-btn-secondary-foreground: var(--secondary-foreground);
+  --color-btn-secondary-outlined: var(--tertiary);
+  --color-btn-secondary-outlined-dark: var(--tertiary-dark);
+  --color-btn-secondary-outlined-foreground: var(--tertiary-foreground);
+  --color-btn-disabled: var(--disabled);
+  --color-btn-disabled-foreground: var(--disabled-foreground);
+  --color-disabled: var(--disabled);
   --font-sans: var(--font-sofia-sans);
   --font-mono: var(--font-geist-mono);
 }
+
+/* 
+Excluding dark mode as it's out of scope for this project
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 body {
   background: var(--background);

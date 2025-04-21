@@ -2,22 +2,22 @@ import { Button, ButtonProps } from "@/components/atoms/Button";
 import { Meta, StoryFn } from "@storybook/react";
 
 export default {
-  title: "Atoms/Button",
+  title: "Atoms/Button/Primary/Outlined",
   component: Button,
   argTypes: {
     colorScheme: {
       control: { type: "select" },
-      options: ["primary", "secondary", "destructive"],
+      options: ["primary"],
       description: "Color scheme of the button",
     },
     variant: {
       control: { type: "select" },
-      options: ["contained", "outlined"],
+      options: ["outlined"],
       description: "Style of the button",
     },
     size: {
       control: { type: "select" },
-      options: ["small", "medium"],
+      options: ["medium", "small"],
       description: "Size of the button",
     },
     icon: {
@@ -43,8 +43,20 @@ export default {
 
 const Template: StoryFn<ButtonProps> = (args) => <Button {...args} />;
 
-// Playground with default controls
-export const Playground = Template.bind({});
-Playground.args = {
+export const ButtonPrimaryOutlinedDefault = Template.bind({});
+ButtonPrimaryOutlinedDefault.args = {
+  colorScheme: "primary",
+  variant: "outlined",
+  size: "medium",
+  isDisabled: false,
+  children: "Button",
+};
+
+export const ButtonPrimaryOutlinedDisabled = Template.bind({});
+ButtonPrimaryOutlinedDisabled.args = {
+  colorScheme: "primary",
+  variant: "outlined",
+  size: "medium",
+  isDisabled: true,
   children: "Button",
 };

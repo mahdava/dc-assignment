@@ -1,6 +1,7 @@
 "use client";
 
-import React from "react";
+import Icon, { IconProps } from "@/components/atoms/Icon";
+import React, { ReactNode } from "react";
 import {
   composeRenderProps,
   Button as RACButton,
@@ -10,39 +11,252 @@ import { tv } from "tailwind-variants";
 import { focusRing } from "./utils";
 
 export interface ButtonProps extends RACButtonProps {
-  variant?: "primary" | "secondary" | "destructive" | "icon";
+  colorScheme?: "primary" | "secondary" | "destructive";
+  variant?: "contained" | "outlined";
+  size?: "small" | "medium";
+  icon?: IconProps;
+  iconPosition?: "left" | "right";
+  iconOnly?: boolean;
+  children?: ReactNode;
 }
 
 const button = tv({
   extend: focusRing,
-  base: "px-5 py-2 text-sm text-center transition rounded-lg border border-black/10 dark:border-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.1)] dark:shadow-none cursor-default",
+  base: "inline-flex items-center justify-center rounded-lg border transition focus-visible:outline-none cursor-pointer",
   variants: {
-    variant: {
-      primary: "bg-blue-600 hover:bg-blue-700 pressed:bg-blue-800 text-white",
-      secondary:
-        "bg-gray-100 hover:bg-gray-200 pressed:bg-gray-300 text-gray-800 dark:bg-zinc-600 dark:hover:bg-zinc-500 dark:pressed:bg-zinc-400 dark:text-zinc-100",
-      destructive: "bg-red-700 hover:bg-red-800 pressed:bg-red-900 text-white",
-      icon: "border-0 p-1 flex items-center justify-center text-gray-600 hover:bg-black/[5%] pressed:bg-black/10 dark:text-zinc-400 dark:hover:bg-white/10 dark:pressed:bg-white/20 disabled:bg-transparent",
+    colorScheme: {
+      primary: "",
+      secondary: "",
+      destructive: "",
     },
-    isDisabled: {
-      true: "bg-gray-100 dark:bg-zinc-800 text-gray-300 dark:text-zinc-600 forced-colors:text-[GrayText] border-black/5 dark:border-white/5",
+    variant: {
+      contained: "",
+      outlined: "bg-transparent",
+    },
+    size: {
+      small: "px-2 py-1 text-sm font-medium",
+      medium: "px-4 py-2 text-base leading-none font-medium",
+    },
+    disabled: {
+      true: "cursor-not-allowed",
+    },
+    hovered: {
+      true: "",
+    },
+    pressed: {
+      true: "",
+    },
+    focused: {
+      true: "",
     },
   },
+  compoundVariants: [
+    // Primary, contained
+    {
+      colorScheme: "primary",
+      variant: "contained",
+      class:
+        "bg-btn-primary border-btn-primary text-btn-primary-foreground disabled:bg-btn-disabled disabled:text-btn-disabled-foreground disabled:border-btn-disabled",
+    },
+    {
+      colorScheme: "primary",
+      variant: "contained",
+      hovered: true,
+      class: "bg-btn-primary-dark border-btn-primary-dark",
+    },
+    {
+      colorScheme: "primary",
+      variant: "contained",
+      pressed: true,
+      class: "bg-btn-primary-dark border-btn-primary-dark",
+    },
+
+    // Primary, outlined
+    {
+      colorScheme: "primary",
+      variant: "outlined",
+      class:
+        "border-btn-primary text-btn-primary disabled:border-btn-disabled disabled:text-btn-disabled-foreground",
+    },
+    {
+      colorScheme: "primary",
+      variant: "outlined",
+      hovered: true,
+      class:
+        "bg-btn-primary-outlined text-btn-primary-dark text-btn-primary-dark",
+    },
+    {
+      colorScheme: "primary",
+      variant: "outlined",
+      pressed: true,
+      class:
+        "bg-btn-primary-outlined text-btn-primary-dark text-btn-primary-dark",
+    },
+
+    // Secondary, contained
+    {
+      colorScheme: "secondary",
+      variant: "contained",
+      class:
+        "bg-btn-secondary border-btn-secondary text-btn-secondary-foreground disabled:bg-btn-disabled disabled:text-btn-disabled-foreground disabled:border-btn-disabled",
+    },
+    {
+      colorScheme: "secondary",
+      variant: "contained",
+      hovered: true,
+      class:
+        "bg-btn-secondary-dark border-btn-secondary-dark text-btn-secondary-foreground",
+    },
+    {
+      colorScheme: "secondary",
+      variant: "contained",
+      pressed: true,
+      class:
+        "bg-btn-secondary-dark border-btn-secondary-dark text-btn-secondary-foreground",
+    },
+
+    // Secondary, outlined
+    {
+      colorScheme: "secondary",
+      variant: "outlined",
+      class:
+        "border-btn-secondary-outlined text-btn-secondary-outlined-foreground disabled:text-btn-disabled-foreground disabled:border-btn-disabled",
+    },
+    {
+      colorScheme: "secondary",
+      variant: "outlined",
+      hovered: true,
+      class: "border-btn-secondary-outlined-dark",
+    },
+    {
+      colorScheme: "secondary",
+      variant: "outlined",
+      pressed: true,
+      class: "border-btn-secondary-outlined-dark",
+    },
+
+    // Destructive, contained
+    // Missing from the original Figma file, however needed in most cases
+    {
+      colorScheme: "destructive",
+      variant: "contained",
+      class: "bg-red-700 text-white border-transparent",
+    },
+    {
+      colorScheme: "destructive",
+      variant: "contained",
+      hovered: true,
+      class: "hover:bg-red-800",
+    },
+    {
+      colorScheme: "destructive",
+      variant: "contained",
+      pressed: true,
+      class: "pressed:bg-red-900",
+    },
+
+    // Destructive, outlined
+    {
+      colorScheme: "destructive",
+      variant: "outlined",
+      class: "border-red-700 text-red-700",
+    },
+    {
+      colorScheme: "destructive",
+      variant: "outlined",
+      hovered: true,
+      class: "hover:bg-red-50",
+    },
+    {
+      colorScheme: "destructive",
+      variant: "outlined",
+      pressed: true,
+      class: "pressed:bg-red-100",
+    },
+  ],
   defaultVariants: {
-    variant: "primary",
+    colorScheme: "primary",
+    variant: "contained",
+    size: "medium",
+    disabled: false,
   },
 });
 
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ variant = "primary", className, ...props }, ref) => (
-    <RACButton
-      {...props}
-      ref={ref}
-      className={composeRenderProps(className, (cn, renderProps) =>
-        button({ ...renderProps, variant, className: cn }),
-      )}
-    />
-  ),
+  (
+    {
+      colorScheme = "primary",
+      variant = "contained",
+      size = "medium",
+      icon,
+      iconPosition = "left",
+      iconOnly = false,
+      children,
+      className,
+      ...props
+    },
+    ref,
+  ) => {
+    const iconMarginFromText = () => {
+      if (size === "small") {
+        return iconPosition === "left" ? "mr-1" : "ml-1";
+      }
+      if (size === "medium") {
+        return iconPosition === "left" ? "mr-2" : "ml-2";
+      }
+    };
+
+    const iconOnlyMargin = () => {
+      if (size === "small") {
+        return "-mx-1";
+      }
+      if (size === "medium") {
+        return "-mx-2";
+      }
+    };
+
+    return (
+      <RACButton
+        {...props}
+        ref={ref}
+        className={composeRenderProps(
+          className,
+          (cn, { isHovered, isPressed, isFocused, isDisabled }) =>
+            button({
+              colorScheme,
+              variant,
+              size,
+              hovered: isHovered,
+              pressed: isPressed,
+              focused: isFocused,
+              disabled: isDisabled,
+              className: cn,
+            }),
+        )}
+      >
+        {icon ? (
+          iconOnly ? (
+            <>
+              <Icon {...icon} aria-hidden="true" className={iconOnlyMargin()} />
+              {children && <span className="sr-only">{children}</span>}
+            </>
+          ) : (
+            <>
+              {iconPosition === "left" && (
+                <Icon {...icon} className={iconMarginFromText()} />
+              )}
+              {children}
+              {iconPosition === "right" && (
+                <Icon {...icon} className={iconMarginFromText()} />
+              )}
+            </>
+          )
+        ) : (
+          children
+        )}
+      </RACButton>
+    );
+  },
 );
 
 Button.displayName = "Button";
