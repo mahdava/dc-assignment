@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@plugin "tailwindcss-react-aria-components";
 
 :root {
   --background: #ffffff;
@@ -54,5 +53,9 @@ Excluding dark mode as it's out of scope for this project
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-sofia-sans), Arial, Helvetica, sans-serif;
+}
+
+input {
+  font-family: var(--font-sofia-sans), Arial, Helvetica, sans-serif;
 }

@@ -1,12 +1,10 @@
 "use client";
 
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { Button } from "@/components/atoms/Button";
 import React from "react";
 import {
-  Button as AriaButton,
   NumberField as AriaNumberField,
   NumberFieldProps as AriaNumberFieldProps,
-  ButtonProps,
   ValidationResult,
 } from "react-aria-components";
 import {
@@ -37,30 +35,34 @@ export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(
     >
       {label && <Label>{label}</Label>}
 
-      <FieldGroup>
+      <FieldGroup className="h-8 max-w-28">
         {(renderProps) => (
           <>
-            <Input />
             <div
               className={fieldBorderStyles({
                 ...renderProps,
-                class: "flex flex-col border-s-2",
+                class: "flex items-center px-1",
               })}
             >
-              <StepperButton slot="increment">
-                <ChevronUp aria-hidden className="w-4 h-4" />
-              </StepperButton>
+              <Button
+                slot="decrement"
+                colorScheme="secondary"
+                size="small"
+                iconOnly
+                icon={{ name: "minus" }}
+                className="rounded-sm w-5 h-5"
+              ></Button>
 
-              <div
-                className={fieldBorderStyles({
-                  ...renderProps,
-                  class: "border-b-2",
-                })}
-              />
+              <Input className="max-w-[60px] py-4 text-center" />
 
-              <StepperButton slot="decrement">
-                <ChevronDown aria-hidden className="w-4 h-4" />
-              </StepperButton>
+              <Button
+                slot="increment"
+                colorScheme="secondary"
+                size="small"
+                iconOnly
+                icon={{ name: "plus" }}
+                className="rounded-sm w-5 h-5"
+              ></Button>
             </div>
           </>
         )}
@@ -72,17 +74,3 @@ export const NumberField = React.forwardRef<HTMLDivElement, NumberFieldProps>(
   ),
 );
 NumberField.displayName = "NumberField";
-
-export const StepperButton = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, ...props }, ref) => (
-    <AriaButton
-      {...props}
-      ref={ref}
-      className={composeTailwindRenderProps(
-        className,
-        "px-0.5 cursor-default text-gray-500 pressed:bg-gray-100 group-disabled:text-gray-200 dark:text-zinc-400 dark:pressed:bg-zinc-800 dark:group-disabled:text-zinc-600 forced-colors:group-disabled:text-[GrayText]",
-      )}
-    />
-  ),
-);
-StepperButton.displayName = "StepperButton";

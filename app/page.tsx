@@ -33,6 +33,12 @@ export default function Home() {
   return (
     <main className="p-4 max-w-md mx-auto">
       <h1 className="text-2xl font-semibold mb-4">Storage Allocation Form</h1>
+      <Button
+        colorScheme="secondary"
+        size="small"
+        iconOnly
+        icon={{ name: "plus" }}
+      ></Button>
       <Form onSubmit={handleSubmit(onSubmit)}>
         <Controller
           name="name"
@@ -67,12 +73,14 @@ export default function Home() {
             />
           )}
         />
+        <NumberField></NumberField>
         <Slider minValue={0} maxValue={100} step={1}>
           <SliderTrack></SliderTrack>
         </Slider>
         <Button type="submit" isDisabled={true}>
           Submit
         </Button>
+
         <Button type="submit">Hello</Button>
       </Form>
 
