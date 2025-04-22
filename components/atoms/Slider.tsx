@@ -66,9 +66,10 @@ export function SliderTrack({ thumbLabels }: { thumbLabels?: string[] }) {
                   "",
                   (className, { isFocusVisible, isDragging, isDisabled }) =>
                     twMerge(
-                      "border-white size-5 rounded-full border-1 bg-slider-thumb shadow-xl cursor-pointer outline-none hover:ring-8 hover:ring-slider-thumb/16 ring-offset-2",
+                      "border-white size-4 rounded-full border-0.5 bg-slider-thumb shadow-xl cursor-pointer outline-none transition hover:ring-8 hover:ring-slider-thumb/16 ring-offset-2",
                       "group-data-[orientation=horizontal]:top-1/2 group-data-[orientation=vertical]:left-1/2",
-                      isDragging && "ring-8 ring-slider-thumb/16 ring-offset-2",
+                      isDragging &&
+                        "hover:ring-12 ring-12 ring-slider-thumb/16 ring-offset-2",
                       isDisabled && "cursor-not-allowed bg-disabled",
                       isFocusVisible &&
                         "ring-8 ring-slider-thumb/16 ring-offset-2",
