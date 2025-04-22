@@ -30,16 +30,19 @@ export const SharedFilesystemForm = () => {
       {submission && (
         <div
           role="status"
+          data-testid="submission-result"
           aria-live="polite"
           className="mb-6 p-4 bg-green-100 rounded animate-fade-in"
         >
           <h3 className="sr-only">Submission results</h3>
           <ul className="space-y-1 text-green-950">
             <li>
-              <strong>Name:</strong> {submission.name}
+              <strong>Name:</strong>{" "}
+              <span data-testid="submission-name">{submission.name}</span>
             </li>
             <li>
-              <strong>Size (GB):</strong> {submission.size}
+              <strong>Size (GB):</strong>{" "}
+              <span data-testid="submission-size">{submission.size}</span>
             </li>
           </ul>
         </div>
