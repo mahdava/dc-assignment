@@ -24,7 +24,7 @@ export function Slider<T extends number | number[]>(props: SliderProps<T>) {
       {...props}
       className={composeTailwindRenderProps(
         props.className,
-        "flex flex-col gap-2 data-[orientation=horizontal]:min-w-64 data-[orientation=vertical]:items-center",
+        "flex flex-col gap-2 data-[orientation=horizontal]:min-w-52 data-[orientation=vertical]:items-center",
       )}
     />
   );

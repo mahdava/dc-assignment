@@ -13,6 +13,8 @@ export interface NumberSliderFieldProps
   maxValue?: number;
   step?: number;
   thumbLabels?: string[];
+  numberFieldClassName?: string;
+  sliderClassName?: string;
 }
 
 export const NumberSliderField = React.forwardRef<
@@ -31,6 +33,8 @@ export const NumberSliderField = React.forwardRef<
       label,
       description,
       errorMessage,
+      numberFieldClassName,
+      sliderClassName,
       ...otherProps
     },
     ref,
@@ -51,7 +55,7 @@ export const NumberSliderField = React.forwardRef<
     };
 
     return (
-      <div ref={ref} className="flex flex-row items-end gap-6">
+      <div ref={ref} className="flex flex-row items-end gap-2">
         <div>
           <NumberField
             {...otherProps}
@@ -63,18 +67,22 @@ export const NumberSliderField = React.forwardRef<
             minValue={minValue}
             maxValue={maxValue}
             step={step}
+            {...(numberFieldClassName && { className: numberFieldClassName })}
           />
         </div>
-        <Slider
-          value={currentValue}
-          onChange={handleChange}
-          minValue={minValue}
-          maxValue={maxValue}
-          step={step}
-          aria-label={label}
-        >
-          <SliderTrack thumbLabels={thumbLabels} />
-        </Slider>
+        <div className="px-2">
+          <Slider
+            value={currentValue}
+            onChange={handleChange}
+            minValue={minValue}
+            maxValue={maxValue}
+            step={step}
+            aria-label={label}
+            {...(sliderClassName && { className: sliderClassName })}
+          >
+            <SliderTrack thumbLabels={thumbLabels} />
+          </Slider>
+        </div>
       </div>
     );
   },

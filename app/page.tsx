@@ -6,6 +6,7 @@ import { NumberField } from "@/components/atoms/NumberField";
 import { Slider, SliderTrack } from "@/components/atoms/Slider";
 import { TextField } from "@/components/atoms/TextField";
 import { NumberSliderField } from "@/components/molecules/NumberSliderField";
+import { SharedFilesystemForm } from "@/components/organisms/SharedFilesystemForm";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -89,6 +90,8 @@ export default function Home() {
 
         <Button type="submit">Hello</Button>
       </Form>
+
+      <SharedFilesystemForm />
 
       {submitted && (
         <div className="mt-6 p-4 bg-gray-100 dark:bg-zinc-800 rounded-lg">
