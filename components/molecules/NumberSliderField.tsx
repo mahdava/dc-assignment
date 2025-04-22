@@ -51,18 +51,20 @@ export const NumberSliderField = React.forwardRef<
     };
 
     return (
-      <div ref={ref} className="flex flex-col gap-4">
-        <NumberField
-          {...otherProps}
-          label={label}
-          description={description}
-          errorMessage={errorMessage}
-          value={currentValue}
-          onChange={handleChange}
-          minValue={minValue}
-          maxValue={maxValue}
-          step={step}
-        />
+      <div ref={ref} className="flex flex-row items-end gap-6">
+        <div>
+          <NumberField
+            {...otherProps}
+            label={label}
+            description={description}
+            errorMessage={errorMessage}
+            value={currentValue}
+            onChange={handleChange}
+            minValue={minValue}
+            maxValue={maxValue}
+            step={step}
+          />
+        </div>
         <Slider
           value={currentValue}
           onChange={handleChange}

@@ -78,6 +78,7 @@ export default function Home() {
           minValue={0}
           maxValue={100}
           step={5}
+          label="Size (GB)"
         ></NumberSliderField>
         <Slider minValue={0} maxValue={100} step={1}>
           <SliderTrack></SliderTrack>
