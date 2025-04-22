@@ -3,11 +3,11 @@ import { twMerge } from "tailwind-merge";
 import { tv } from "tailwind-variants";
 
 export const focusRing = tv({
-  base: "outline outline-[#4b7a8a] outline-offset-2",
+  base: "outline outline-[#4b7a8a]",
   variants: {
     isFocusVisible: {
       false: "outline-0",
-      true: "outline-4",
+      true: "outline-2 outline-offset-2",
     },
   },
 });

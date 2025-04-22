@@ -67,6 +67,20 @@ Excluding dark mode as it's out of scope for this project
   }
 } */
 
+@layer utilities {
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  .animate-fade-in {
+    animation: fade-in 300ms ease-out forwards;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

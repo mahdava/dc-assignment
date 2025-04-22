@@ -22,7 +22,7 @@ export interface ButtonProps extends RACButtonProps {
 
 const button = tv({
   extend: focusRing,
-  base: "inline-flex items-center justify-center rounded-lg border transition focus-visible:outline-none cursor-pointer",
+  base: "inline-flex items-center justify-center rounded-lg border transition cursor-pointer",
   variants: {
     colorScheme: {
       primary: "",
@@ -221,7 +221,10 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         className={composeRenderProps(
           className,
-          (cn, { isHovered, isPressed, isFocused, isDisabled }) =>
+          (
+            cn,
+            { isHovered, isPressed, isFocused, isFocusVisible, isDisabled },
+          ) =>
             button({
               colorScheme,
               variant,
@@ -229,6 +232,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               hovered: isHovered,
               pressed: isPressed,
               focused: isFocused,
+              isFocusVisible: isFocusVisible,
               disabled: isDisabled,
               className: cn,
             }),

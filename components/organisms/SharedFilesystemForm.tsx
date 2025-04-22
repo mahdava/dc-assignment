@@ -1,23 +1,49 @@
 "use client";
 
 import type { FormEvent } from "react";
+import { useState } from "react";
 import { Button } from "../atoms/Button";
 import { Form } from "../atoms/Form";
 import { TextField } from "../atoms/TextField";
 import { NumberSliderField } from "../molecules/NumberSliderField";
 
 export const SharedFilesystemForm = () => {
+  const [submission, setSubmission] = useState<Record<string, string> | null>(
+    null,
+  );
+
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
     const data = Object.fromEntries(new FormData(e.currentTarget).entries());
-    console.log("Submitted values:", data);
+    setSubmission(
+      Object.fromEntries(Object.entries(data).map(([k, v]) => [k, String(v)])),
+    );
   };
 
   return (
-    <div className="max-w-sm p-6 border border-gray-100 rounded-lg">
-      <h2 className="text-xl font-semibold mb-4">
+    <div className="max-w-sm p-10 border border-gray-100 rounded-lg">
+      <h2 className="text-xl font-semibold mb-4 sr-only">
         Create new shared Filesystem
       </h2>
+
+      {submission && (
+        <div
+          role="status"
+          aria-live="polite"
+          className="mb-6 p-4 bg-green-100 rounded animate-fade-in"
+        >
+          <h3 className="sr-only">Submission results</h3>
+          <ul className="space-y-1 text-green-950">
+            <li>
+              <strong>Name:</strong> {submission.name}
+            </li>
+            <li>
+              <strong>Size (GB):</strong> {submission.size}
+            </li>
+          </ul>
+        </div>
+      )}
 
       <Form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <TextField
@@ -34,6 +60,7 @@ export const SharedFilesystemForm = () => {
           maxValue={100}
           step={1}
           defaultValue={0}
+          sliderClassName="data-[orientation=horizontal]:min-w-44"
         />
 
         <div className="mt-6 flex gap-4">
@@ -43,6 +70,7 @@ export const SharedFilesystemForm = () => {
             colorScheme="secondary"
             icon={{ name: "trash" }}
             className="flex-1 justify-center"
+            onClick={() => setSubmission(null)}
           >
             Clear
           </Button>
