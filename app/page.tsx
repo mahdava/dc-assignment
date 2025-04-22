@@ -5,6 +5,7 @@ import { Form } from "@/components/atoms/Form";
 import { NumberField } from "@/components/atoms/NumberField";
 import { Slider, SliderTrack } from "@/components/atoms/Slider";
 import { TextField } from "@/components/atoms/TextField";
+import { NumberSliderField } from "@/components/molecules/NumberSliderField";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -73,7 +74,11 @@ export default function Home() {
             />
           )}
         />
-        <NumberField></NumberField>
+        <NumberSliderField
+          minValue={0}
+          maxValue={100}
+          step={5}
+        ></NumberSliderField>
         <Slider minValue={0} maxValue={100} step={1}>
           <SliderTrack></SliderTrack>
         </Slider>
