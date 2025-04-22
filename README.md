@@ -60,6 +60,8 @@ Core technologies used in this codebase.
 
 Built with [Next.js](https://nextjs.org) and bootstrapped via `create-next-app`. Uses `next/font` to automatically optimize and load the Geist and Sophia Sans fonts.
 
+- **Local Development:** `npm run dev` (must be on port 3000, or otherwise Playwright `BASE_URL` needs to be updated)
+- **Build:** `npm run build`
 - **Documentation:** [https://nextjs.org/docs](https://nextjs.org/docs)
 
 ### Tailwind CSS
@@ -89,8 +91,11 @@ Component‑driven development environment for building UI components in isolati
 
 End‑to‑end testing framework to automate browser interactions and validate user flows.
 
-- **Run tests:** `npm run test:e2e`
+- **Run tests:** `npm run test:e2e` (requires an instance up and running, e.g. `npm run dev`)
+- **First-time using Playwright:** `npx playwright install` (you'll otherwise get an error and be promted to install it anyway)
 - **Documentation:** [https://playwright.dev/docs/intro](https://playwright.dev/docs/intro)
+
+Please keep in mind that in order for the tests to run
 
 ## Atomic Design
 
