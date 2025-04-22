@@ -8,6 +8,9 @@ import { TextField } from "../atoms/TextField";
 import { NumberSliderField } from "../molecules/NumberSliderField";
 
 export const SharedFilesystemForm = () => {
+  // In an ideal scenario, one would use Zod here
+  // Left it out of scope only for lack of time
+
   const [submission, setSubmission] = useState<Record<string, string> | null>(
     null,
   );
