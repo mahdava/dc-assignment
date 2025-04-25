@@ -16,7 +16,7 @@ If you don't want to use a nvm, the latest recommended v22 of [node](https://nod
 - Clone the repository:
 
 ```bash
-git clone https://github.com/your-username/dc-assignment.git
+git clone https://github.com/mahdava/dc-assignment.git
 ```
 
 - Install npm dependencies:
